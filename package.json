@@ -1,0 +1,27 @@
+{
+  "name": "graphitepad",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run scripts/dev.ts",
+    "dev:web": "next dev -p 3311",
+    "build:web": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "desktop": "bun run build:web && hutch electrobun run --env=dev",
+    "build:desktop": "bun run build:web && hutch electrobun build --env=stable"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.0"
+  }
+}

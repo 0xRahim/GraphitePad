@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# TypeScript
+*.tsbuildinfo
+
+# Desktop build output
+build/
+artifacts/
+
+# Electrobun / Hutch
+.hutch/
+.cottontail-tmp/
+hutch.lock
+
+# Environment files
+.env*
+!.env.example
+
+# Logs and OS files
+*.log
+.DS_Store
+
+# Standalone landing page (has its own git repository)
+landing_page/

@@ -1,0 +1,373 @@
+/* Ported studio chrome. Everything floats over the canvas. */
+.gp-studio {
+	position: fixed;
+	inset: 0;
+	overflow: hidden;
+	background: var(--bg);
+	color: var(--ink);
+	font: 12px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif;
+	user-select: none;
+	-webkit-user-select: none;
+}
+.gp-studio * {
+	box-sizing: border-box;
+}
+.gp-studio input,
+.gp-studio textarea {
+	user-select: text;
+	-webkit-user-select: text;
+}
+
+.gp-studio #stack {
+	position: fixed;
+	inset: 0;
+	transform-origin: 0 0;
+	background: var(--paper);
+	will-change: transform;
+}
+.gp-studio #stack canvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.gp-studio #stack canvas.blue {
+	filter: sepia(1) hue-rotate(178deg) saturate(3.2) brightness(1.06);
+}
+.gp-studio #grain {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0.45;
+	mix-blend-mode: multiply;
+}
+.gp-studio #g {
+	position: fixed;
+	left: 0;
+	top: 0;
+	touch-action: none;
+	cursor: none;
+	outline: none;
+}
+.gp-studio.pixel-studio #g {
+	cursor: crosshair;
+	image-rendering: pixelated;
+}
+.gp-studio #ring {
+	position: fixed;
+	left: 0;
+	top: 0;
+	border: 1.5px solid #26262b;
+	border-radius: 50%;
+	pointer-events: none;
+	transform: translate(-50%, -50%);
+	display: none;
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7);
+	transition:
+		background 0.06s,
+		border-color 0.06s;
+}
+.gp-studio #ring.down {
+	background: rgba(38, 38, 43, 0.2);
+}
+.gp-studio #ring.clutch {
+	border-color: var(--ink);
+	background: rgba(38, 38, 43, 0.16);
+	box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.85);
+}
+
+.gp-studio .box {
+	position: fixed;
+	z-index: 10;
+	background: var(--ui);
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+.gp-studio #bar {
+	top: calc(env(safe-area-inset-top, 0px) + 8px);
+	left: 50%;
+	transform: translateX(-50%);
+	width: max-content;
+	max-width: calc(100% - 16px);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px 7px;
+	align-items: center;
+	justify-content: center;
+	padding: 6px 9px;
+}
+.gp-studio #rail {
+	left: 8px;
+	top: 110px;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	padding: 5px;
+	width: 84px;
+	max-height: calc(100% - 166px);
+	overflow: auto;
+}
+.gp-studio #panel {
+	right: 8px;
+	top: 110px;
+	width: 200px;
+	padding: 8px;
+	max-height: calc(100% - 170px);
+	overflow: auto;
+}
+.gp-studio #timeline {
+	bottom: calc(env(safe-area-inset-bottom, 0px) + 42px);
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: calc(100% - 16px);
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 9px;
+	overflow-x: auto;
+}
+
+.gp-studio button,
+.gp-studio select,
+.gp-studio input[type="number"] {
+	font: inherit;
+	color: var(--ink);
+	background: transparent;
+	border: 1px solid var(--line);
+	border-radius: 7px;
+	padding: 4px 7px;
+	cursor: pointer;
+	transition:
+		border-color 0.1s,
+		background 0.1s;
+}
+.gp-studio button:hover,
+.gp-studio select:hover {
+	border-color: var(--mute);
+}
+.gp-studio button.on {
+	background: var(--ink);
+	color: var(--bg);
+	border-color: var(--ink);
+}
+.gp-studio button.clutch-on {
+	background: var(--ink);
+	color: var(--bg);
+	border-color: var(--ink);
+}
+.gp-studio button:disabled,
+.gp-studio input:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+.gp-studio label {
+	color: var(--mute);
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+.gp-studio input[type="range"] {
+	width: 64px;
+	accent-color: var(--ink);
+	cursor: pointer;
+}
+.gp-studio #panel input[type="range"] {
+	width: 100%;
+}
+.gp-studio #panel label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 4px 0;
+	gap: 6px;
+}
+.gp-studio #panel label input[type="range"] {
+	flex: 1;
+}
+.gp-studio h4 {
+	margin: 7px 0 4px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 11px;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--mute);
+}
+.gp-studio h4:first-child {
+	margin-top: 0;
+}
+.gp-studio .sep {
+	height: 1px;
+	background: var(--line);
+	margin: 2px 0;
+}
+.gp-studio .row {
+	display: flex;
+	gap: 3px;
+	margin: 2px 0;
+	align-items: center;
+}
+.gp-studio .row .nm {
+	flex: 1;
+	text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.gp-studio .row.on .nm {
+	border-color: var(--ink);
+	font-weight: 600;
+}
+.gp-studio .mini {
+	padding: 3px 5px;
+	font-size: 11px;
+}
+.gp-studio .sw {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	padding: 0;
+	border: 2px solid var(--ui);
+	outline: 1px solid var(--line);
+}
+.gp-studio .sw.on {
+	outline: 2px solid var(--ink);
+}
+.gp-studio #sw {
+	display: inline-flex;
+	gap: 4px;
+	align-items: center;
+}
+.gp-studio input[type="color"] {
+	width: 25px;
+	height: 23px;
+	padding: 0;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: none;
+	cursor: pointer;
+}
+.gp-studio #status {
+	position: fixed;
+	bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 5px 14px;
+	border-radius: 999px;
+	color: var(--mute);
+	white-space: nowrap;
+	max-width: calc(100% - 16px);
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.gp-studio #status b {
+	color: var(--ink);
+}
+.gp-studio #status b.cl {
+	color: var(--ink);
+}
+.gp-studio .back-rail {
+	width: 100%;
+	padding: 5px 2px;
+	border-color: transparent;
+	background: transparent;
+	color: var(--mute);
+	font-size: 10px;
+	line-height: 1.25;
+	white-space: nowrap;
+}
+.gp-studio .back-rail:hover {
+	border-color: var(--line);
+	color: var(--ink);
+}
+
+/* pixel-specific panel bits */
+.gp-studio #palGrid {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	gap: 3px;
+	margin: 4px 0;
+}
+.gp-studio #palGrid .sw {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	border-radius: 4px;
+	border: 1.5px solid var(--ui);
+	outline: 1px solid var(--line);
+	cursor: pointer;
+}
+.gp-studio #palGrid .sw.on {
+	outline: 2px solid var(--ink);
+	transform: scale(1.06);
+}
+.gp-studio #palGrid .sw.bg-on {
+	outline: 2px dashed var(--mute);
+}
+.gp-studio #previewWrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: repeating-conic-gradient(var(--ck1) 0% 25%, var(--ck2) 0% 50%) 50% / 12px 12px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	height: 96px;
+	overflow: hidden;
+	margin-bottom: 4px;
+}
+.gp-studio #prevC {
+	image-rendering: pixelated;
+	max-width: 92px;
+	max-height: 90px;
+}
+.gp-studio .fchip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 3px 7px;
+	border-radius: 7px;
+	border: 1px solid var(--line);
+	background: transparent;
+	cursor: pointer;
+	font-size: 11px;
+	white-space: nowrap;
+}
+.gp-studio .fchip.on {
+	background: var(--ink);
+	color: var(--bg);
+	border-color: var(--ink);
+	font-weight: 600;
+}
+.gp-studio #fList {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	overflow-x: auto;
+	max-width: 46vw;
+	padding: 1px 0;
+}
+
+.studio-loading,
+.studio-missing {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	background: var(--bg);
+	color: var(--mute);
+}
+
+@media (max-width: 760px) {
+	.gp-studio #panel {
+		display: none;
+	}
+	.gp-studio #timeline {
+		right: 8px;
+		left: 100px;
+		transform: none;
+	}
+}

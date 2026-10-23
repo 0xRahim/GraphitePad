@@ -25,6 +25,3 @@ hutch.lock
 # Logs and OS files
 *.log
 .DS_Store
-
-# Standalone landing page (has its own git repository)
-landing_page/
